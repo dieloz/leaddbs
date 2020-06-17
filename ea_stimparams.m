@@ -3242,10 +3242,11 @@ switch model
         ea_vatsettings_horn;
     case 'Dembek 2017'
         ea_vatsettings_dembek;
-     case 'fastfield'
+    case 'fastfield'
         ea_vatsettings_fastfield;
+    case 'OSS-DBS (Butenko 2020)'
+        ea_vatsettings_butenko;
 end
-% ea_vatsettings_horn;
 
 
 % --- Executes on button press in estimateInTemplate.
