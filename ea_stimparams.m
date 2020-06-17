@@ -1045,6 +1045,7 @@ end
 % assign correct .m-file to function.
 genvatfunctions=getappdata(handles.stimfig,'genvatfunctions');
 ea_genvat=eval(['@',genvatfunctions{get(handles.modelselect,'Value')}]);
+
 stimname=S.label;
 
 for el=1:length(elstruct)
@@ -1054,7 +1055,7 @@ for el=1:length(elstruct)
             % hidden.
             keyboard
         else % single patient
-            [stimparams(1,side).VAT(el).VAT,volume]=feval(ea_genvat,elstruct(el).coords_mm,getappdata(handles.stimfig,'S'),side,options,stimname,options.prefs.machine.vatsettings.horn_ethresh,handles.stimfig);
+            [stimparams(1,side).VAT(el).VAT,volume]=feval(ea_genvat,elstruct(el).coords_mm,getappdata(handles.stimfig,'S'),side,options,stimname,handles.stimfig);
             stimparams(1,side).volume=volume;
             flix=1;
         end

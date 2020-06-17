@@ -10,22 +10,21 @@ if nargin==5
     side=varargin{3};
     options=varargin{4};
     stimname=varargin{5};
-    thresh=options.prefs.machine.vatsettings.horn_ethresh; %0.2;
-
-elseif nargin==7
+elseif nargin==6
     acoords=varargin{1};
     S=varargin{2};
     side=varargin{3};
     options=varargin{4};
     stimname=varargin{5};
-    thresh=varargin{6};
-    lgfigure=varargin{7};
+    lgfigure=varargin{6};
 elseif nargin==1
     if ischar(varargin{1}) % return name of method.
         varargout{1}='SimBio/FieldTrip (see Horn 2017)';
         return
     end
 end
+
+thresh=options.prefs.machine.vatsettings.horn_ethresh; %0.2;
 
 if useSI
     thresh=thresh.*(10^3);
@@ -349,9 +348,7 @@ vol.pos=vol.pos*SIfx; % convert back to mm.
 
 midpts=mean(cat(3,vol.pos(vol.tet(:,1),:),vol.pos(vol.tet(:,2),:),vol.pos(vol.tet(:,3),:),vol.pos(vol.tet(:,4),:)),3); % midpoints of each pyramid
 
-
 reduc=10;
-
 
 % generate flowfield visualization:
 % generate a jittered indices vector to be used to reduce flowfield
@@ -367,9 +364,6 @@ end
 indices=unique(indices(2:end-1));
 indices(indices==0)=[];
 indices(indices>length(midpts))=[];
-
-
-
 
 [vatfv,vatvolume,radius]=ea_write_vta_nii(S,stimname,midpts,indices,elspec,dpvx,voltix,constvol,thresh,mesh,gradient,side,resultfig,options);
 % transform midpts to template if necessary:

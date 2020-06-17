@@ -1,10 +1,6 @@
 function varargout=ea_genvat_fastfield(varargin)
 
-%prefs.machine.vatsettings.fastfield_cb=0.1;
-%prefs.machine.vatsettings.fastfield_ethresh=0.2;
-
 useSI = 1;
-
 
 if nargin==5
     acoords=varargin{1};
@@ -12,18 +8,13 @@ if nargin==5
     side=varargin{3};
     options=varargin{4};
     stimname=varargin{5};
-   % thresh=options.prefs.machine.vatsettings.fastfield_ethresh; %0.2;
-     thresh=options.prefs.machine.vatsettings.fastfield_ethresh; %0.2;
-    
-elseif nargin==7
+elseif nargin==6
     acoords=varargin{1};
     S=varargin{2};
     side=varargin{3};
     options=varargin{4};
     stimname=varargin{5};
-    thresh=varargin{6};
-    lgfigure=varargin{7};
-    
+    lgfigure=varargin{6};
 elseif nargin==1
     if ischar(varargin{1}) % return name of method.
         varargout{1}= 'fastfield';
@@ -31,6 +22,8 @@ elseif nargin==1
     end
 end
 
+conductivity = options.prefs.machine.vatsettings.fastfield_cb;  %0.1;
+thresh = options.prefs.machine.vatsettings.fastfield_ethresh; %0.2;
 
 %thresh=0.2;
 if useSI
@@ -47,7 +40,6 @@ if ~any(S.activecontacts{side}) % empty VAT, no active contacts.
     return
 end
 
-
 resultfig=getappdata(lgfigure,'resultfig');
 elstruct=getappdata(resultfig,'elstruct');
 options=getappdata(resultfig,'options');
@@ -55,10 +47,6 @@ elspec=getappdata(resultfig,'elspec');
 options.usediffusion=0;
 coords=acoords{side};
 setappdata(resultfig,'elstruct',elstruct);
-
-% conductivity = 0.16;
-%conductivity = options.prefs.machine.vatsettings.horn_cwm;
-conductivity = options.prefs.machine.vatsettings.fastfield_cb;
 
 switch side
     case 1
@@ -73,11 +61,8 @@ if ~isfield(S, 'sources')
     S.sources=1:4;
 end
 
-
 options=ea_resolve_elspec(options);
 Electrode_type = elspec.matfname;
-
-
 
 Efield_all=zeros(100,100,100);
 for source=S.sources
@@ -112,15 +97,8 @@ for source=S.sources
         Efield_all = permute(Efield_all,[2 1 3]);
         
     end
-
     %amp = stimsource.amp;
 end
-
-
-
-
-
-
 
 Efield = Efield_all;
 %[Efield] = get_efield(perc,standard_efield,amp,conductivity);
@@ -132,8 +110,6 @@ load([ea_getearoot,'templates',filesep,'electrode_models',filesep,Electrode_type
 [~,~,xg,yg,zg] = get_trans_mat(electrode,electrode_patient,grid_vec,side);
 
 gv=grid_vec; 
-
-
 
 ea_dispt('Creating nifti header for export...');
 % create nifti

@@ -15,14 +15,11 @@ if nargin>=5
     options=varargin{4};
     stimname=varargin{5};    
 elseif nargin==1
-    
     if ischar(varargin{1}) % return name of method.
         varargout{1}='Maedler 2012';
         return
     end
 end
-
-
 
 switch options.sides(side)
     case 1
