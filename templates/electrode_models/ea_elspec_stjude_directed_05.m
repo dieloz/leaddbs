@@ -14,7 +14,7 @@ function electrode=ea_elspec_stjude_directed_05(varargin)
 
 %% import insulations and contacts from subfolder
 for k = 1:18
-    filename = [fileparts(mfilename('fullpath')),'/StJude_Directed_05_Components/Insulations/ins',num2str(k),'.1'];
+    filename = [fileparts(mfilename('fullpath')),filesep,'StJude_Directed_05_Components',filesep,'Insulations',filesep,'ins',num2str(k),'.1'];
     [node,~,face]=readtetgen(filename);
     electrode.insulation(k).vertices = node;
     electrode.insulation(k).faces = face(:,1:3);
@@ -22,7 +22,7 @@ for k = 1:18
 end
 
 for k = 1:9
-    filename = [fileparts(mfilename('fullpath')),'/StJude_Directed_05_Components/Contacts/con',num2str(k),'.1'];
+    filename = [fileparts(mfilename('fullpath')),filesep,'StJude_Directed_05_Components',filesep,'Contacts',filesep,'con',num2str(k),'.1'];
     [node,~,face]=readtetgen(filename);
     electrode.contacts(k).vertices = node;
     electrode.contacts(k).faces = face(:,1:3);
@@ -52,12 +52,12 @@ electrode.coords_mm(7,:)=[0 0 4.75]+[0.33,-0.66,0];
 electrode.coords_mm(8,:)=[0 0 6.75];
 
 %% saving electrode struct
-save([fileparts(mfilename('fullpath')),'stjude_directed_05.mat'],'electrode');
+save([fileparts(mfilename('fullpath')),filesep,'stjude_directed_05.mat'],'electrode');
 
 %% create and save _vol file
-filename = [fileparts(mfilename('fullpath')),'/StJude_Directed_05_Components/final.1'];
+filename = [fileparts(mfilename('fullpath')),filesep,'StJude_Directed_05_Components',filesep,'final.1'];
 [node,~,face]=readtetgen(filename);
-save([fileparts(mfilename('fullpath')),'stjude_directed_05_vol.mat'],'face','node')
+save([fileparts(mfilename('fullpath')),filesep,'stjude_directed_05_vol.mat'],'face','node')
 clear node face
 
 %% visualize
